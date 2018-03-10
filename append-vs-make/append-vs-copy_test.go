@@ -6,17 +6,36 @@ import (
 
 const N = 1024 * 1024
 type Element int64
-var x = make([]Element, N)
-var y []Element
+var xForCopy = make([]Element, N)
+var xForMake = make([]Element, N)
+var xForMakeCopy = make([]Element, N)
+var xForAppend = make([]Element, N)
+var yForCopy = make([]Element, N)
+var yForMake []Element
+var yForMakeCopy []Element
+var yForAppend []Element
 
-func Benchmark_AllocWithMake(b *testing.B) {
+func Benchmark_PureCopy(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		y = make([]Element, N)
+		copy(yForCopy, xForCopy)
 	}
 }
 
-func Benchmark_AllocWithAppend(b *testing.B) {
+func Benchmark_PureMake(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		y = append([]Element(nil), x...)
+		yForMake = make([]Element, N)
+	}
+}
+
+func Benchmark_MakeAndCopy(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		yForMakeCopy = make([]Element, N)
+		copy(yForMakeCopy, xForMakeCopy)
+	}
+}
+
+func Benchmark_Append(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		yForAppend = append([]Element(nil), xForAppend...)
 	}
 }

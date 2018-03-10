@@ -66,7 +66,7 @@ Benchmark_/Memclr_Slice_4-4           	200000000	         7.86 ns/op
 Benchmark_/Memclr_Slice_2-4           	200000000	         7.41 ns/op
 ```
 
-On the test machine, when the length of the container is at less 1M,
+On the test machine, when the length of the container is out of the range [16, 1M],
 the memclr version is even slower than the general loop version.
 However, some people report that the memclr version is constantly
 more efficient on their machines.

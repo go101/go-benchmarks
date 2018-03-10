@@ -29,12 +29,25 @@ func Benchmark_Mutex(b *testing.B) {
 	}
 }
 
-var ch0 = make(chan struct{}, 1)
-func Benchmark_Channel(b *testing.B) {
+var ch0a = make(chan struct{}, 1)
+func Benchmark_ChannelA(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		ch0 <- struct{}{}
+		ch0a <- struct{}{}
 		g++
-		<-ch0
+		<-ch0a
+	}
+}
+
+var ch0b = func() chan struct{} {
+	c := make(chan struct{}, 1)
+	c <- struct{}{}
+	return c
+}()
+func Benchmark_ChannelB(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		<-ch0b
+		g++
+		ch0b <- struct{}{}
 	}
 }
 
