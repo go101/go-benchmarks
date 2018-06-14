@@ -73,4 +73,15 @@ func Benchmark_AddStrings_Buffer_Reuse(b *testing.B) {
 	}
 }
 
+func Benchmark_AddStrings_Builder(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		var builder strings.Builder
+		for _, w := range words {
+			builder.WriteString(w)
+		}
+		result = builder.String()
+	}
+}
+
 // todo: strings.Builder
