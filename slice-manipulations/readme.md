@@ -2,7 +2,7 @@
 ### About
 
 This benchmark is to compare the costs between one-line and verbose
-implementations for slice grow and insertion.
+implementations for some specified slice manipulations.
 
 ### Result
 
