@@ -30,4 +30,42 @@ Benchmark_RangeSlice_TwoIterationVar-4   	30000000	        42.4 ns/op
 You will find that the benchmark in the middle always looks most efficient.
 But which is really most efficient on earth?
 
+The following are the results by disabling CPU frequency scaling.
+The results are a bit different, the middle one is not always the most performant.
+But orders are still matter.
+It looks, the results of 1 and 3 are the same, but 2 is different.
 
+```
+# for i in /sys/devices/system/cpu/cpu[0-3]
+> do
+> echo performance > $i/cpufreq/scaling_governor
+> done
+# exit
+$
+$ go version
+go version go1.11beta1 linux/amd64
+$
+$ cd 1
+$ go test -bench=. -benchtime=3s
+goos: linux
+goarch: amd64
+Benchmark_RangeSlice_TwoIterationVar-4   	200000000	        29.3 ns/op
+Benchmark_RangeSlice_OneIterationVar-4   	100000000	        30.8 ns/op
+Benchmark_LoopSlice-4                    	100000000	        51.0 ns/op
+$
+$ cd ../2
+$ go test -bench=. -benchtime=3s
+goos: linux
+goarch: amd64
+Benchmark_LoopSlice-4                    	100000000	        30.7 ns/op
+Benchmark_RangeSlice_TwoIterationVar-4   	100000000	        43.3 ns/op
+Benchmark_RangeSlice_OneIterationVar-4   	100000000	        50.9 ns/op
+$
+$ cd ../3
+$ go test -bench=. -benchtime=3s
+goos: linux
+goarch: amd64
+Benchmark_RangeSlice_OneIterationVar-4   	100000000	        30.7 ns/op
+Benchmark_LoopSlice-4                    	100000000	        51.0 ns/op
+Benchmark_RangeSlice_TwoIterationVar-4   	200000000	        29.3 ns/op
+```

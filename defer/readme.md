@@ -20,4 +20,7 @@ Benchmark_MutexNoDeferA-4       	50000000	        27.4 ns/op
 Benchmark_MutexNoDeferB-4       	50000000	        27.6 ns/op
 ```
 
-Go 1.9 may improve the efficiecy of defers much. 
+`defer` hurts performance, at least at the time of Go 1.11.
+However, we should give up using `defer`, for
+1. deferred calls make code robust for some scenarios.
+1. some defer uses may be optimized later.
