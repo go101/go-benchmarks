@@ -5,7 +5,7 @@ import (
 )
 
 const N = 1024 * 1024
-type Element int64
+type Element = int64
 var xForCopy = make([]Element, N)
 var xForMake = make([]Element, N)
 var xForMakeCopy = make([]Element, N)
