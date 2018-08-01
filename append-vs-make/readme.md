@@ -30,7 +30,7 @@ Benchmark_Append-4        	    2000	   1001056 ns/op
 If `N > 10000`,
 it looks create a slice by using `append` is more efficient than
 by using `copy`. This is some counter-intuitive.
-It is more surprised that a pure `make` call is even slower than an `append` call.
+It is more surprising that a pure `make` call is even slower than an `append` call.
 
 However, it looks the results vary much for different kinds of element types.
 The result differences might related to write barriers.
