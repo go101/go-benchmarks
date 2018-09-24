@@ -25,4 +25,19 @@ Benchmark_SliceComparison/PointerAndBCE-4   	10000000	       215 ns/op
 It looks the reflect way is very inefficient,
 and the BCE and early pointer comparison really take effect.
 
+NOTE: since Go SDK 1.11, the standard Go compiler becomes more smarter
+so that now the General version is equivalent to the BCE version,
+and the same is for the Pointer and PointerAndBCE versions.
 
+```
+$ go version
+go version go1.11 linux/amd64
+$ go test -bench=.
+goos: linux
+goarch: amd64
+Benchmark_SliceComparison/Reflect-4         	  100000	     20585 ns/op
+Benchmark_SliceComparison/General-4         	10000000	       214 ns/op
+Benchmark_SliceComparison/BCE-4             	10000000	       214 ns/op
+Benchmark_SliceComparison/Pointer-4         	10000000	       200 ns/op
+Benchmark_SliceComparison/PointerAndBCE-4   	10000000	       199 ns/op
+```
