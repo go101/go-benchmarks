@@ -44,9 +44,9 @@ Benchmark_SliceMemclr_Append-4        	10000000	       224 ns/op	       0 B/op	 
 ```
 
 It looks, since Go 1.11, `append(s, make([]T, n)...)` is optimized by avoiding one allocation.
-However, this optimization doesn't bring any new benefits  for Go.
+However, this optimization doesn't bring any new benefits for Go.
 For two possible scenarios which may be benefited from this optimization, slice grow and slice segment clear,
-there had been already other same-efficency alternative solutions existed before Go 1.11.
+there had been already other same-efficency alternative solutions existing before Go 1.11.
 
 In fact, the most needed optimization is `append(sa, append(sb, sc...)...)`,
 which has not been optimized in Go 1.11.

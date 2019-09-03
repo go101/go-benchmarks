@@ -14,7 +14,7 @@ go version go1.11beta1 linux/amd64
 $ go test -bench=.
 goos: linux
 goarch: amd64
-Benchmark_boxPointer-4          	2000000000	         1.33 ns/op
+Benchmark_BoxPointer-4          	2000000000	         1.33 ns/op
 Benchmark_PointerAssert-4       	2000000000	         1.75 ns/op
 Benchmark_PointerAssign-4       	2000000000	         1.31 ns/op
 Benchmark_BoxInt-4              	300000000	         5.00 ns/op

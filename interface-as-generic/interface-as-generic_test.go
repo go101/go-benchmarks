@@ -8,7 +8,7 @@ const NLoops = 1024
 
 var p, p2 = new(int), new(int)
 var ip interface{} = p
-func Benchmark_boxPointer(b *testing.B) {
+func Benchmark_BoxPointer(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		ip = p
 	}

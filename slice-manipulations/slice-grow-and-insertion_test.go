@@ -33,6 +33,14 @@ func SliceGrow_VerboseCopy(base []T, newCapacity int) []T {
 	return m
 }
 
+func SliceGrow_VerboseOneByOne(base []T, newCapacity int) []T {
+	n := newCapacity - len(base)
+	for i := 0; i < n; i++ {
+		base = append(base, 0)
+	}
+	return base
+}
+
 func SliceInsertion_OneLine(base, inserted []T, i int) []T {
 	return append(base[:i], append(inserted, base[i:]...)...)
 }
@@ -102,6 +110,13 @@ var sc []T
 func Benchmark_SliceGrow_VerboseCopy(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		sc = SliceGrow_VerboseCopy(sx, 100)
+	}
+}
+
+var sd []T
+func Benchmark_SliceGrow_VerboseOneByOne(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		sd = SliceGrow_VerboseOneByOne(sx, 100)
 	}
 }
 
