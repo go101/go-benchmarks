@@ -9,16 +9,6 @@ using `append` and `make` to create slices.
 
 ### Results
 
-All results are for `const N = 1024 * 1024`.
-
-```
-$ cat /proc/cpuinfo | grep 'model name' | uniq
-model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
-$ go version
-go version go1.11beta2 linux/amd64
-```
-
-
 For `type Element = int64`:
 
 ```
@@ -35,7 +25,16 @@ Benchmark_MakeAndCopy-4   	    1518	    753634 ns/op
 Benchmark_Append-4        	    1522	    765014 ns/op
 ```
 
-**_(The following is not valid since Go Toolchain 1.15.)_**
+**_(Most of the following content is not valid since Go Toolchain 1.15.)_**
+
+All results are for `const N = 1024 * 1024`.
+
+```
+$ cat /proc/cpuinfo | grep 'model name' | uniq
+model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
+$ go version
+go version go1.11beta2 linux/amd64
+```
 
 For `type Element = int64`:
 
