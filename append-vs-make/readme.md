@@ -39,10 +39,6 @@ go version go1.11beta2 linux/amd64
 For `type Element = int64`:
 
 ```
-$ cat /proc/cpuinfo | grep 'model name' | uniq
-model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
-$ go version
-go version go1.10 linux/amd64
 $ go test -bench=.
 goos: linux
 goarch: amd64
