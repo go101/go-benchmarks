@@ -4,6 +4,9 @@
 This benchmark is to check the efficiency differences between
 using `append` and `make` to create slices.
 
+**_(Please note that, since Go Toolchain 1.15, the benchmark result has changed much.
+`make+copy` calls are specially optimized so that they are more efficient than the `append` call.)_**
+
 ### Results
 
 All results are for `const N = 1024 * 1024`.
@@ -15,9 +18,32 @@ $ go version
 go version go1.11beta2 linux/amd64
 ```
 
+
 For `type Element = int64`:
 
 ```
+$ cat /proc/cpuinfo | grep 'model name' | uniq
+model name	: AMD Ryzen 3 2200G with Radeon Vega Graphics
+$ go version
+go version go1.15 linux/amd64
+$ go test -bench=.
+goos: linux
+goarch: amd64
+Benchmark_PureCopy-4      	    1921	    613320 ns/op
+Benchmark_PureMake-4      	    1305	    858066 ns/op
+Benchmark_MakeAndCopy-4   	    1518	    753634 ns/op
+Benchmark_Append-4        	    1522	    765014 ns/op
+```
+
+**_(The following is not valid since Go Toolchain 1.15.)_**
+
+For `type Element = int64`:
+
+```
+$ cat /proc/cpuinfo | grep 'model name' | uniq
+model name	: Intel(R) Core(TM) i3-2350M CPU @ 2.30GHz
+$ go version
+go version go1.10 linux/amd64
 $ go test -bench=.
 goos: linux
 goarch: amd64
