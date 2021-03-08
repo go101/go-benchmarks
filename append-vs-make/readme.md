@@ -12,17 +12,17 @@ using `append` and `make` to create slices.
 For `type Element = int64`:
 
 ```
-$ cat /proc/cpuinfo | grep 'model name' | uniq
-model name	: AMD Ryzen 3 2200G with Radeon Vega Graphics
+$ rep 'model name' | uniq
+model name	: Intel(R) Core(TM) i5-4210U CPU @ 1.70GHz
 $ go version
-go version go1.15 linux/amd64
+go version go1.16 linux/amd64
 $ go test -bench=.
 goos: linux
 goarch: amd64
-Benchmark_PureCopy-4      	    1921	    613320 ns/op
-Benchmark_PureMake-4      	    1305	    858066 ns/op
-Benchmark_MakeAndCopy-4   	    1518	    753634 ns/op
-Benchmark_Append-4        	    1522	    765014 ns/op
+Benchmark_PureCopy-4      	    1699	    645140 ns/op
+Benchmark_PureMake-4      	    1161	   1034144 ns/op
+Benchmark_MakeAndCopy-4   	    1485	    806598 ns/op
+Benchmark_Append-4        	    1388	    871497 ns/op
 ```
 
 **_(Most of the following content is not valid since Go Toolchain 1.15.)_**
