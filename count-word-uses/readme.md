@@ -27,4 +27,6 @@ doesn't use map element setters as frequently as the function `f`.
 
 (ref: https://github.com/golang/go/issues/45021)
 
+More `[]byte <-> string` conversion optimizations made by the official Go compiler: https://go101.org/article/string.html#conversion-optimizations
+
 
