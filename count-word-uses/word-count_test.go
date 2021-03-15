@@ -75,8 +75,7 @@ func h(words [][]byte) map[string]int {
 			stats[v]++
 		} else {
 			stats = append(stats, 1)
-			v = len(m)
-			m[string(w)] = v
+			m[string(w)] = len(m)
 		}
 	}
 	for k, c := range m {
