@@ -8,7 +8,7 @@ This benchmark is to compare different ways to stat word count.
 ```
 $ go version
 go version go1.16.2 linux/amd64
-$ go test -bench=.
+$ go test -bench=. -benchmem
 goos: linux
 goarch: amd64
 pkg: github.com/go101/go-benchmarks/count-word-uses
