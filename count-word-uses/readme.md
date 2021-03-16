@@ -13,9 +13,12 @@ goos: linux
 goarch: amd64
 pkg: github.com/go101/go-benchmarks/count-word-uses
 cpu: Intel(R) Core(TM) i5-4210U CPU @ 1.70GHz
-Benchmark_f-4   	     693	   1697033 ns/op	 1928077 B/op	   10009 allocs/op
-Benchmark_g-4   	    1808	    620125 ns/op	   32040 B/op	     211 allocs/op
-Benchmark_h-4   	    1792	    647553 ns/op	   29312 B/op	     117 allocs/op
+Benchmark_f-4          	     705	   1715754 ns/op	 1928089 B/op	   10009 allocs/op
+Benchmark_g-4          	    1851	    626779 ns/op	   32043 B/op	     211 allocs/op
+Benchmark_h-4          	    1826	    633126 ns/op	   29311 B/op	     117 allocs/op
+Benchmark_f_unsafe-4   	    1881	    627144 ns/op	    8075 B/op	       9 allocs/op
+Benchmark_g_unsafe-4   	    1832	    607550 ns/op	   12845 B/op	     111 allocs/op
+Benchmark_h_unsafe-4   	    1872	    616787 ns/op	   10116 B/op	      17 allocs/op
 ```
 
 Why the `f` function is slow? The reason is `string(byte_slice)` doesn't make a
