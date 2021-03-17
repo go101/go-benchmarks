@@ -38,15 +38,34 @@ func init() {
 			}
 		}
 	}
-	m = f(words)
-	check("f")
-	m = g(words)
-	check("g")
-	m = h(words)
-	check("h")
+	m = IntAdd(words)
+	check("IntAdd")
+	m = IntIncrement(words)
+	check("IntIncrement")
+	m = Pointer(words)
+	check("Pointer")
+	m = Index(words)
+	check("Index")
+	m = IntAdd_unsafe(words)
+	check("IntAdd_unsafe")
+	m = IntIncrement_unsafe(words)
+	check("IntIncrement_unsafe")
+	m = Pointer_unsafe(words)
+	check("Pointer_unsafe")
+	m = Index_unsafe(words)
+	check("Index_unsafe")
 }
 
-func f(words [][]byte) map[string]int {
+func IntAdd(words [][]byte) map[string]int {
+	var m = make(map[string]int)
+	for _, w := range words {
+		m[string(w)] = m[string(w)] + 1
+		
+	}
+	return m
+}
+
+func IntIncrement(words [][]byte) map[string]int {
 	var m = make(map[string]int)
 	for _, w := range words {
 		m[string(w)]++
@@ -54,7 +73,7 @@ func f(words [][]byte) map[string]int {
 	return m
 }
 
-func g(words [][]byte) map[string]int {
+func Pointer(words [][]byte) map[string]int {
 	var m2 = make(map[string]*int)
 	for _, w := range words {
 		if v := m2[string(w)]; v != nil {
@@ -72,7 +91,7 @@ func g(words [][]byte) map[string]int {
 	return m
 }
 
-func h(words [][]byte) map[string]int {
+func Index(words [][]byte) map[string]int {
 	var m = make(map[string]int)
 	var stats []int
 	for _, w := range words {
@@ -89,33 +108,49 @@ func h(words [][]byte) map[string]int {
 	return m
 }
 
-var mf map[string]int
-func Benchmark_f(b *testing.B) {
+var mAdd map[string]int
+func Benchmark_IntAdd(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		mf = f(words)
+		mAdd = IntAdd(words)
 	}
 }
 
-var mg map[string]int
-func Benchmark_g(b *testing.B) {
+var mIncrement map[string]int
+func Benchmark_Increment(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		mg = g(words)
+		mIncrement = IntIncrement(words)
 	}
 }
 
-var mh map[string]int
-func Benchmark_h(b *testing.B) {
+var mPointer map[string]int
+func Benchmark_Pointer(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		mh = h(words)
+		mPointer = Pointer(words)
+	}
+}
+
+var mIndex map[string]int
+func Benchmark_Index(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		mIndex = Index(words)
 	}
 }
 
 
 
-func f2(words [][]byte) map[string]int {
+func IntAdd_unsafe(words [][]byte) map[string]int {
+	var m = make(map[string]int)
+	for _, w := range words {
+		m[str(w)] = m[str(w)] + 1
+	}
+	return m
+}
+
+func IntIncrement_unsafe(words [][]byte) map[string]int {
 	var m = make(map[string]int)
 	for _, w := range words {
 		m[str(w)]++
@@ -123,7 +158,7 @@ func f2(words [][]byte) map[string]int {
 	return m
 }
 
-func g2(words [][]byte) map[string]int {
+func Pointer_unsafe(words [][]byte) map[string]int {
 	var m2 = make(map[string]*int)
 	for _, w := range words {
 		if v := m2[str(w)]; v != nil {
@@ -141,7 +176,7 @@ func g2(words [][]byte) map[string]int {
 	return m
 }
 
-func h2(words [][]byte) map[string]int {
+func Index_unsafe(words [][]byte) map[string]int {
 	var m = make(map[string]int)
 	var stats []int
 	for _, w := range words {
@@ -158,28 +193,92 @@ func h2(words [][]byte) map[string]int {
 	return m
 }
 
-var mf2 map[string]int
-func Benchmark_f_unsafe(b *testing.B) {
+var mAdd_unsafe map[string]int
+func Benchmark_IntAdd_unsafe(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		mf2 = f2(words)
+		mAdd_unsafe = IntAdd_unsafe(words)
 	}
 }
 
-var mg2 map[string]int
-func Benchmark_g_unsafe(b *testing.B) {
+var mIncrement_unsafe map[string]int
+func Benchmark_IntIncrement_unsafe(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		mg2 = g2(words)
+		mIncrement_unsafe = IntIncrement_unsafe(words)
 	}
 }
 
-var mh2 map[string]int
-func Benchmark_h_unsafe(b *testing.B) {
+var mPointer_unsafe map[string]int
+func Benchmark_Pointer_unsafe(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		mh2 = h2(words)
+		mPointer_unsafe = Pointer_unsafe(words)
+	}
+}
+
+var mIndex_unsafe map[string]int
+func Benchmark_Index_unsafe(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		mIndex_unsafe = Index_unsafe(words)
 	}
 }
 
 
+
+func MapIncA(m map[int]int) {
+	m[1] = m[1] + 1
+	m[100] = m[100] + 1
+	m[1000] = m[1000] + 1
+}
+
+func MapIncB(m map[int]int) {
+	m[1] += 1
+	m[100] += 1
+	m[1000] += 1
+}
+
+func MapConcatA(m map[int]string) {
+	m[1] = m[1] + "!!!"
+	m[100] = m[100] + "!!!"
+	m[1000] = m[1000] + "!!!"
+}
+
+func MapConcatB(m map[int]string) {
+	m[1] += "!!!"
+	m[100] += "!!!"
+	m[1000] += "!!!"
+}
+
+func Benchmark_MapIncA(b *testing.B) {
+	var m = map[int]int{1: 0, 100: 0, 1000: 0}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		MapIncA(m)
+	}
+}
+
+func Benchmark_MapIncB(b *testing.B) {
+	var m = map[int]int{1: 0, 100: 0, 1000: 0}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		MapIncB(m)
+	}
+}
+
+func Benchmark_MapConcatA(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		var m = map[int]string{1: "???", 100: "???", 1000: "???"}
+		MapConcatA(m)
+	}
+}
+
+func Benchmark_MapConcatB(b *testing.B) {
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		var m = map[int]string{1: "???", 100: "???", 1000: "???"}
+		MapConcatB(m)
+	}
+}
