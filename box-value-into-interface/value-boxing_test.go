@@ -24,7 +24,8 @@ func Benchmark_PointerAssign(b *testing.B) {
 	}
 }
 
-var it, it2 int
+var it, it2 int = 66666, 66666
+var it_small, it2_small = 255, 255
 var ii interface{} = it
 func Benchmark_BoxInt(b *testing.B) {
 	for i := 0; i < b.N; i++ {
@@ -36,9 +37,37 @@ func Benchmark_IntAssert(b *testing.B) {
 		it = ii.(int)
 	}
 }
+func Benchmark_BoxSmallInt(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ii = it_small
+	}
+}
+func Benchmark_SmallIntAssert(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		it_small = ii.(int)
+	}
+}
 func Benchmark_IntAssign(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		it = it2
+	}
+}
+
+var by, by2 byte
+var iby interface{} = by
+func Benchmark_BoxByte(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		iby = by
+	}
+}
+func Benchmark_ByteAssert(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		by = iby.(byte)
+	}
+}
+func Benchmark_ByteAssign(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		by = by2
 	}
 }
 
@@ -111,6 +140,24 @@ func Benchmark_SliceAssert(b *testing.B) {
 func Benchmark_SliceAssign(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		sc = sc2
+	}
+}
+
+var fc, fc2 = func(){}, func(){}
+var ifc interface{} = fc
+func Benchmark_BoxFunction(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ifc = fc
+	}
+}
+func Benchmark_FunctionAssert(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		fc = ifc.(func())
+	}
+}
+func Benchmark_FunctionAssign(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		fc = fc2
 	}
 }
 
