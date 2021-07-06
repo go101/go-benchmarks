@@ -23,7 +23,7 @@ Benchmark_Pointer_unsafe-4        	    1832	    596916 ns/op	   12851 B/op	     
 Benchmark_Index_unsafe-4          	    1884	    607870 ns/op	   10112 B/op	      17 allocs/op
 ```
 
-Why the `Increment` function is slower than `Pointer` and `Index`?
+Why is the `Increment` function slower than `Pointer` and `Index`?
 The reason is `string(byte_slice)` doesn't make a duplication
 when it appears in map element getters (an optimization made by the
 official Go compiler), but it makes a duplication if it appears in map element setters.
@@ -31,7 +31,7 @@ official Go compiler), but it makes a duplication if it appears in map element s
 But another compiler optimization makes their performance different), there is a
 map element setter and a map element getter in it (in fact, the getter only exists
 in `IntAdd` but not `Increment`). The `Pointer` and `Index` functions
-doesn't use map element setters as frequently as the function `Increment`.
+don't use map element setters as frequently as the function `Increment`.
 
 (ref: https://github.com/golang/go/issues/45021)
 
